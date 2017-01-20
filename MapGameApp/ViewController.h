@@ -7,9 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import "Monumento.h"
+
+
 
 @interface ViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIView *mapMonuView;
+@property (weak, nonatomic) IBOutlet UIView *MapMunView;
+@property (strong, nonatomic) MKMapView *mapaMonumento;
+@property (strong, nonatomic) MKMapView *mapaMundo;
+@property (strong, nonatomic) Monumento *Monumento;
+@property(nonatomic,retain) NSMutableArray *monumentos;
+@property (weak, nonatomic) IBOutlet UILabel *monumentolbl;
 
-
+@property (weak, nonatomic) IBOutlet UIButton *nextBtn;
+@property (weak, nonatomic) IBOutlet UIButton *okBtn;
+- (IBAction)okBtn:(UIButton *)sender;
+- (IBAction)nextBtn:(UIButton *)sender;
 @end
 

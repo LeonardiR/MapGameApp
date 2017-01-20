@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F994E1B1E31607600E3D40C /* Captura de pantalla 2017-01-19 a las 21.57.47.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F994E1A1E31607600E3D40C /* Captura de pantalla 2017-01-19 a las 21.57.47.png */; };
+		4F994E201E3271C800E3D40C /* Monumento.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F994E1F1E3271C800E3D40C /* Monumento.m */; };
 		4F9988C01E3102C90035A308 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9988BF1E3102C90035A308 /* main.m */; };
 		4F9988C31E3102C90035A308 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9988C21E3102C90035A308 /* AppDelegate.m */; };
 		4F9988C61E3102C90035A308 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9988C51E3102C90035A308 /* ViewController.m */; };
@@ -16,6 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F994E1A1E31607600E3D40C /* Captura de pantalla 2017-01-19 a las 21.57.47.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Captura de pantalla 2017-01-19 a las 21.57.47.png"; sourceTree = "<group>"; };
+		4F994E1E1E3271C800E3D40C /* Monumento.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monumento.h; sourceTree = "<group>"; };
+		4F994E1F1E3271C800E3D40C /* Monumento.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Monumento.m; sourceTree = "<group>"; };
 		4F9988BB1E3102C90035A308 /* MapGameApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapGameApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F9988BF1E3102C90035A308 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F9988C11E3102C90035A308 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -58,6 +63,7 @@
 		4F9988BD1E3102C90035A308 /* MapGameApp */ = {
 			isa = PBXGroup;
 			children = (
+				4F994E1A1E31607600E3D40C /* Captura de pantalla 2017-01-19 a las 21.57.47.png */,
 				4F9988C11E3102C90035A308 /* AppDelegate.h */,
 				4F9988C21E3102C90035A308 /* AppDelegate.m */,
 				4F9988C41E3102C90035A308 /* ViewController.h */,
@@ -67,6 +73,8 @@
 				4F9988CC1E3102C90035A308 /* LaunchScreen.storyboard */,
 				4F9988CF1E3102C90035A308 /* Info.plist */,
 				4F9988BE1E3102C90035A308 /* Supporting Files */,
+				4F994E1E1E3271C800E3D40C /* Monumento.h */,
+				4F994E1F1E3271C800E3D40C /* Monumento.m */,
 			);
 			path = MapGameApp;
 			sourceTree = "<group>";
@@ -137,6 +145,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F994E1B1E31607600E3D40C /* Captura de pantalla 2017-01-19 a las 21.57.47.png in Resources */,
 				4F9988CE1E3102C90035A308 /* LaunchScreen.storyboard in Resources */,
 				4F9988CB1E3102C90035A308 /* Assets.xcassets in Resources */,
 				4F9988C91E3102C90035A308 /* Main.storyboard in Resources */,
@@ -150,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F994E201E3271C800E3D40C /* Monumento.m in Sources */,
 				4F9988C61E3102C90035A308 /* ViewController.m in Sources */,
 				4F9988C31E3102C90035A308 /* AppDelegate.m in Sources */,
 				4F9988C01E3102C90035A308 /* main.m in Sources */,
@@ -276,7 +286,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dedam.MapGameApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -288,7 +298,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dedam.MapGameApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
@@ -311,6 +321,7 @@
 				4F9988D41E3102C90035A308 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
