@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4F994E1B1E31607600E3D40C /* Captura de pantalla 2017-01-19 a las 21.57.47.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F994E1A1E31607600E3D40C /* Captura de pantalla 2017-01-19 a las 21.57.47.png */; };
 		4F994E201E3271C800E3D40C /* Monumento.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F994E1F1E3271C800E3D40C /* Monumento.m */; };
+		4F994E231E33AB0E00E3D40C /* MKAnnotationClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F994E221E33AB0E00E3D40C /* MKAnnotationClass.m */; };
 		4F9988C01E3102C90035A308 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9988BF1E3102C90035A308 /* main.m */; };
 		4F9988C31E3102C90035A308 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9988C21E3102C90035A308 /* AppDelegate.m */; };
 		4F9988C61E3102C90035A308 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9988C51E3102C90035A308 /* ViewController.m */; };
@@ -21,6 +22,8 @@
 		4F994E1A1E31607600E3D40C /* Captura de pantalla 2017-01-19 a las 21.57.47.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Captura de pantalla 2017-01-19 a las 21.57.47.png"; sourceTree = "<group>"; };
 		4F994E1E1E3271C800E3D40C /* Monumento.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monumento.h; sourceTree = "<group>"; };
 		4F994E1F1E3271C800E3D40C /* Monumento.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Monumento.m; sourceTree = "<group>"; };
+		4F994E211E33AB0E00E3D40C /* MKAnnotationClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKAnnotationClass.h; sourceTree = "<group>"; };
+		4F994E221E33AB0E00E3D40C /* MKAnnotationClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKAnnotationClass.m; sourceTree = "<group>"; };
 		4F9988BB1E3102C90035A308 /* MapGameApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapGameApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F9988BF1E3102C90035A308 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F9988C11E3102C90035A308 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -75,6 +78,8 @@
 				4F9988BE1E3102C90035A308 /* Supporting Files */,
 				4F994E1E1E3271C800E3D40C /* Monumento.h */,
 				4F994E1F1E3271C800E3D40C /* Monumento.m */,
+				4F994E211E33AB0E00E3D40C /* MKAnnotationClass.h */,
+				4F994E221E33AB0E00E3D40C /* MKAnnotationClass.m */,
 			);
 			path = MapGameApp;
 			sourceTree = "<group>";
@@ -162,6 +167,7 @@
 				4F994E201E3271C800E3D40C /* Monumento.m in Sources */,
 				4F9988C61E3102C90035A308 /* ViewController.m in Sources */,
 				4F9988C31E3102C90035A308 /* AppDelegate.m in Sources */,
+				4F994E231E33AB0E00E3D40C /* MKAnnotationClass.m in Sources */,
 				4F9988C01E3102C90035A308 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

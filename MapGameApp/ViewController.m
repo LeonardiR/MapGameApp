@@ -40,16 +40,11 @@
     [_mapaMundo setScrollEnabled:YES];
     [_mapaMundo setRotateEnabled:YES];
     
-    UILongPressGestureRecognizer *longPressGestureRecognizer =
-    [[UILongPressGestureRecognizer alloc]
-     initWithTarget:self
-     action:@selector(handleLongPress:)];
+    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
+                                          initWithTarget:self action:@selector(handleLongPress:)];
+    lpgr.minimumPressDuration = 2.0;
+    [self.mapaMundo addGestureRecognizer:lpgr];
     
-    [longPressGestureRecognizer setNumberOfTouchesRequired:1];
-    [longPressGestureRecognizer setMinimumPressDuration:1];
-    [longPressGestureRecognizer setAllowableMovement:10];
-    [self.MapMunView addGestureRecognizer:longPressGestureRecognizer];
-
     
     [self initJuego];
     [self.mapMonuView addSubview:_mapaMonumento];
@@ -255,9 +250,17 @@
     }
 }
 
-- (void) handleLongPress:(UILongPressGestureRecognizer *)paramSender {
+- (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer.state != UIGestureRecognizerStateBegan)
+        return;
     
-    CGPoint touchPoint = [paramSender locationInView:_MapMunView];
+    CGPoint touchPoint = [gestureRecognizer locationInView:self.mapaMundo];
+    CLLocationCoordinate2D touchMapCoordinate =
+    [self.mapaMundo convertPoint:touchPoint toCoordinateFromView:self.mapaMundo];
     
-}
-@end
+    MKAnnotationClass *annot = [[MKAnnotationClass alloc] init];
+    annot.coordinate = touchMapCoordinate;
+    [self.mapaMundo addAnnotation:annot];
+    
+}@end
