@@ -40,12 +40,6 @@
     [_mapaMundo setScrollEnabled:YES];
     [_mapaMundo setRotateEnabled:YES];
     
-    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
-                                          initWithTarget:self action:@selector(handleLongPress:)];
-    lpgr.minimumPressDuration = 2.0;
-    [self.mapaMundo addGestureRecognizer:lpgr];
-    
-    
     [self initJuego];
     [self.mapMonuView addSubview:_mapaMonumento];
     [self.MapMunView addSubview:_mapaMundo];
@@ -62,6 +56,11 @@
     [self initMonumentos];
     [self selectRandomMonumento];
     [self mostrarMonumento];
+    _lpgr = [[UILongPressGestureRecognizer alloc]
+             initWithTarget:self action:@selector(handleLongPress:)];
+    _lpgr.minimumPressDuration = 2.0;
+    
+    [self.mapaMundo addGestureRecognizer:_lpgr];
     
 }
 
@@ -82,9 +81,6 @@
     [_mapaMundo setCamera:currentCameraMun animated:NO];
     
     
-    _monumentolbl.text = [NSString stringWithFormat: @"%@\r\r%@", _Monumento.nombre, _Monumento.ciudad];
-
-
 }
 
 - (void) selectRandomMonumento {
@@ -239,15 +235,19 @@
 }
 
 - (IBAction)okBtn:(UIButton *)sender {
-
+    [self.mapaMundo removeGestureRecognizer:_lpgr];
+    _monumentolbl.text = [NSString stringWithFormat: @"%@\r\r%@", _Monumento.nombre, _Monumento.ciudad];
 }
 
 - (IBAction)nextBtn:(UIButton *)sender {
     [self selectRandomMonumento];
     [self mostrarMonumento];
+    [self.mapaMundo addGestureRecognizer:_lpgr];
+    _monumentolbl.text = [NSString stringWithFormat: @"Situa el monumento en el mapa"];
     if (_monumentos == nil || [_monumentos count] == 0) {
         [self initJuego];
     }
+    
 }
 
 - (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer
@@ -262,5 +262,8 @@
     MKAnnotationClass *annot = [[MKAnnotationClass alloc] init];
     annot.coordinate = touchMapCoordinate;
     [self.mapaMundo addAnnotation:annot];
+    [self.mapaMundo removeGestureRecognizer:_lpgr];
+    
+    
     
 }@end

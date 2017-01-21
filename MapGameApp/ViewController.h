@@ -13,6 +13,7 @@
 #import "MKAnnotationClass.h"
 
 @interface ViewController : UIViewController <MKMapViewDelegate>
+@property UILongPressGestureRecognizer *lpgr;
 @property (weak, nonatomic) IBOutlet UIView *mapMonuView;
 @property (weak, nonatomic) IBOutlet UIView *MapMunView;
 @property (strong, nonatomic) MKMapView *mapaMonumento;
