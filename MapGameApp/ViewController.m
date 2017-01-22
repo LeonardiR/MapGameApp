@@ -72,14 +72,8 @@
     [currentCameraMonu setPitch:_Monumento.pitch];
     [currentCameraMonu setAltitude:200.0f];
     [currentCameraMonu setHeading:_Monumento.heading];
-    
-    [currentCameraMun setCenterCoordinate:CLLocationCoordinate2DMake(_Monumento.lat,_Monumento.lng)];
-    [currentCameraMun setPitch:_Monumento.pitch];
-    [currentCameraMun setHeading:_Monumento.heading];
-    
     [_mapaMonumento setCamera:currentCameraMonu animated:NO];
     [_mapaMundo setCamera:currentCameraMun animated:NO];
-    
     
 }
 
