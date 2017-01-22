@@ -9,7 +9,6 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-
 @end
 
 @implementation ViewController
@@ -227,20 +226,6 @@
 
 
 }
-
-- (IBAction)okBtn:(UIButton *)sender {
-    CLLocationCoordinate2D MonuCoords = CLLocationCoordinate2DMake(_Monumento.lat, _Monumento.lng);
-    MKAnnotationClass *annot = [[MKAnnotationClass alloc] init];
-    annot.coordinate = MonuCoords;
-    [self.mapaMundo addAnnotation:annot];
-    
-    _monumentolbl.text = [NSString stringWithFormat: @"%@\r\r%@", _Monumento.nombre, _Monumento.ciudad];
-    _distancelbl.text = [NSString stringWithFormat: @"%d", _KilometersIntTotal];
-    
-    [self playSound];
-    [self.mapaMundo removeGestureRecognizer:_lpgr];
-}
-
 -(void) playSound {
     
     if (_KilometersInt < 300) {
@@ -259,6 +244,21 @@
     }
     
 }
+
+- (IBAction)okBtn:(UIButton *)sender {
+    CLLocationCoordinate2D MonuCoords = CLLocationCoordinate2DMake(_Monumento.lat, _Monumento.lng);
+    MKAnnotationClass *annot = [[MKAnnotationClass alloc] init];
+    annot.coordinate = MonuCoords;
+    [self.mapaMundo addAnnotation:annot];
+    
+    _monumentolbl.text = [NSString stringWithFormat: @"%@\r\r%@", _Monumento.nombre, _Monumento.ciudad];
+    _distancelbl.text = [NSString stringWithFormat: @"%d", _KilometersIntTotal];
+    
+    [self playSound];
+    [self dibujarLinea];
+    [self.mapaMundo removeGestureRecognizer:_lpgr];
+}
+
 
 - (IBAction)nextBtn:(UIButton *)sender {
     [self selectRandomMonumento];
@@ -287,12 +287,52 @@
     annot.coordinate = touchMapCoordinate;
     [self.mapaMundo addAnnotation:annot];
     
-    CLLocation *ini = [[CLLocation alloc] initWithLatitude:_Monumento.lat longitude:_Monumento.lng];
-    CLLocation *fin = [[CLLocation alloc] initWithLatitude: touchMapCoordinate.latitude longitude:touchMapCoordinate.longitude];
-    CLLocationDistance kilometers = [fin distanceFromLocation:ini] / 1000;
+    _ini = [[CLLocation alloc] initWithLatitude:_Monumento.lat longitude:_Monumento.lng];
+    _fin = [[CLLocation alloc] initWithLatitude: touchMapCoordinate.latitude longitude:touchMapCoordinate.longitude];
+    CLLocationDistance kilometers = [_fin distanceFromLocation:_ini] / 1000;
     _KilometersInt = (int) kilometers;
     _KilometersIntTotal+=_KilometersInt;
     [self.mapaMundo removeGestureRecognizer:_lpgr];
     
 }
+
+- (MKOverlayRenderer *) mapView:(MKMapView *)mapView
+             rendererForOverlay:(id<MKOverlay>)overlay {
+    
+    MKPolylineRenderer *polylineRender  = [[MKPolylineRenderer alloc]
+                                           initWithOverlay:overlay];
+    UIColor *lineColor = [UIColor redColor];
+    
+    if([overlay isKindOfClass:[MKGeodesicPolyline class]]) {
+        lineColor = [UIColor blackColor];
+    }
+    [polylineRender setStrokeColor:lineColor];
+    [polylineRender setLineWidth:3.0f];
+    
+    return polylineRender;
+}
+
+- (void) dibujarLinea {
+    
+    
+    [_mapaMundo showAnnotations:@[_ini, _fin] animated:NO];
+    CLLocationCoordinate2D points[2];
+    
+    points[0] = _ini.coordinate;
+    points[1] = _fin.coordinate;
+    
+    MKGeodesicPolyline *overlayPolyline =
+    [MKGeodesicPolyline polylineWithCoordinates:points count:2];
+    
+    MKGeodesicPolyline *geodesicPolyline =
+    [MKGeodesicPolyline polylineWithCoordinates:points count:2];
+    
+    [_mapaMundo addOverlay:overlayPolyline];
+    [_mapaMundo addOverlay:geodesicPolyline];
+    
+        
+    
+
+}
+
 @end

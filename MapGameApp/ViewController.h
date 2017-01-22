@@ -16,6 +16,8 @@
 
 @interface ViewController : UIViewController <MKMapViewDelegate>
 @property UILongPressGestureRecognizer *lpgr;
+@property CLLocation *ini;
+@property CLLocation *fin;
 @property int KilometersInt;
 @property int KilometersIntTotal;
 @property (weak, nonatomic) IBOutlet UIView *mapMonuView;
@@ -30,5 +32,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *okBtn;
 - (IBAction)okBtn:(UIButton *)sender;
 - (IBAction)nextBtn:(UIButton *)sender;
+
+
 @end
 
