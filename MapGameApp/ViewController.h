@@ -11,9 +11,13 @@
 #import <CoreLocation/CoreLocation.h>
 #import "Monumento.h"
 #import "MKAnnotationClass.h"
+#import <AVFoundation/AVFoundation.h>
+#import "SoundManager.h"
 
 @interface ViewController : UIViewController <MKMapViewDelegate>
 @property UILongPressGestureRecognizer *lpgr;
+@property int KilometersInt;
+@property int KilometersIntTotal;
 @property (weak, nonatomic) IBOutlet UIView *mapMonuView;
 @property (weak, nonatomic) IBOutlet UIView *MapMunView;
 @property (strong, nonatomic) MKMapView *mapaMonumento;
@@ -21,6 +25,7 @@
 @property (strong, nonatomic) Monumento *Monumento;
 @property(nonatomic,retain) NSMutableArray *monumentos;
 @property (weak, nonatomic) IBOutlet UILabel *monumentolbl;
+@property (weak, nonatomic) IBOutlet UILabel *distancelbl;
 @property (weak, nonatomic) IBOutlet UIButton *nextBtn;
 @property (weak, nonatomic) IBOutlet UIButton *okBtn;
 - (IBAction)okBtn:(UIButton *)sender;

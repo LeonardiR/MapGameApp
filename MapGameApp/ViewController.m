@@ -8,8 +8,6 @@
 
 #import "ViewController.h"
 
-
-
 @interface ViewController ()
 
 @end
@@ -53,6 +51,8 @@
 }
 
 - (void) initJuego {
+    _KilometersIntTotal=0;
+    _distancelbl.text = [NSString stringWithFormat: @"0"];
     [self initMonumentos];
     [self selectRandomMonumento];
     [self mostrarMonumento];
@@ -235,8 +235,35 @@
 }
 
 - (IBAction)okBtn:(UIButton *)sender {
-    [self.mapaMundo removeGestureRecognizer:_lpgr];
+    CLLocationCoordinate2D MonuCoords = CLLocationCoordinate2DMake(_Monumento.lat, _Monumento.lng);
+    MKAnnotationClass *annot = [[MKAnnotationClass alloc] init];
+    annot.coordinate = MonuCoords;
+    [self.mapaMundo addAnnotation:annot];
+    
     _monumentolbl.text = [NSString stringWithFormat: @"%@\r\r%@", _Monumento.nombre, _Monumento.ciudad];
+    _distancelbl.text = [NSString stringWithFormat: @"%d", _KilometersIntTotal];
+    
+    [self playSound];
+    [self.mapaMundo removeGestureRecognizer:_lpgr];
+}
+
+-(void) playSound {
+    
+    if (_KilometersInt < 300) {
+        [[SoundManager sharedManager] prepareToPlayWithSound:@"applause-moderate-03.wav"];
+        [[SoundManager sharedManager] playSound:@"applause-moderate-03.wav" looping:NO];
+    }
+    
+    if (_KilometersInt >= 300 || _KilometersInt<= 1000) {
+        [[SoundManager sharedManager] prepareToPlayWithSound:@"applause-light-02.wav"];
+        [[SoundManager sharedManager] playSound:@"applause-light-02.wav" looping:NO];
+    }
+    
+    if (_KilometersInt > 1000) {
+        [[SoundManager sharedManager] prepareToPlayWithSound:@"boo-01.wav"];
+        [[SoundManager sharedManager] playSound:@"boo-01.wav" looping:NO];
+    }
+    
 }
 
 - (IBAction)nextBtn:(UIButton *)sender {
@@ -244,6 +271,9 @@
     [self mostrarMonumento];
     [self.mapaMundo addGestureRecognizer:_lpgr];
     _monumentolbl.text = [NSString stringWithFormat: @"Situa el monumento en el mapa"];
+    [_mapaMundo removeAnnotations:_mapaMundo.annotations];
+    
+    
     if (_monumentos == nil || [_monumentos count] == 0) {
         [self initJuego];
     }
@@ -262,8 +292,13 @@
     MKAnnotationClass *annot = [[MKAnnotationClass alloc] init];
     annot.coordinate = touchMapCoordinate;
     [self.mapaMundo addAnnotation:annot];
+    
+    CLLocation *ini = [[CLLocation alloc] initWithLatitude:_Monumento.lat longitude:_Monumento.lng];
+    CLLocation *fin = [[CLLocation alloc] initWithLatitude: touchMapCoordinate.latitude longitude:touchMapCoordinate.longitude];
+    CLLocationDistance kilometers = [fin distanceFromLocation:ini] / 1000;
+    _KilometersInt = (int) kilometers;
+    _KilometersIntTotal+=_KilometersInt;
     [self.mapaMundo removeGestureRecognizer:_lpgr];
     
-    
-    
-}@end
+}
+@end

@@ -82,6 +82,7 @@
                     </view>
                     <connections>
                         <outlet property="MapMunView" destination="vQZ-oE-FW6" id="c4Y-Ex-woZ"/>
+                        <outlet property="distancelbl" destination="Xy9-DZ-eg0" id="Amy-oe-mgW"/>
                         <outlet property="mapMonuView" destination="dbf-P7-Nes" id="ZQ2-dK-hZv"/>
                         <outlet property="monumentolbl" destination="WIv-rQ-DPU" id="yLE-ag-sVm"/>
                         <outlet property="nextBtn" destination="Hu8-Pl-4bF" id="xRZ-nY-RFs"/>
