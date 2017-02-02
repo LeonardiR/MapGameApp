@@ -10,7 +10,7 @@
 
 @interface ViewController ()
 @end
-
+float eyeAltitude2;
 @implementation ViewController
 {
     MKPolyline *geodesicPolyline;
@@ -78,7 +78,7 @@
     _MonuCoords = CLLocationCoordinate2DMake(_Monumento.lat, _Monumento.lng);
     CLLocationCoordinate2D MunCoords = CLLocationCoordinate2DMake(39.09596294, -18.10546875);
     float eyeAltitude = 100.0f;
-    float eyeAltitude2 = 1.0f;
+    eyeAltitude2 = 1.0f;
     _currentCameraMonu = [MKMapCamera
                            cameraLookingAtCenterCoordinate:(CLLocationCoordinate2D)_MonuCoords
                            fromEyeCoordinate:(CLLocationCoordinate2D)_MonuCoords
@@ -261,12 +261,12 @@
         [[SoundManager sharedManager] playSound:@"applause-moderate-03.wav" looping:NO];
     }
     
-    if (_KilometersInt >= 300 || _KilometersInt<= 1000) {
+    if (_KilometersInt >= 300 && _KilometersInt<= 1000) {
         [[SoundManager sharedManager] prepareToPlayWithSound:@"applause-light-02.wav"];
         [[SoundManager sharedManager] playSound:@"applause-light-02.wav" looping:NO];
     }
     
-    if (_KilometersInt > 1000) {
+     if (_KilometersInt > 1000) {
         [[SoundManager sharedManager] prepareToPlayWithSound:@"boo-01.wav"];
         [[SoundManager sharedManager] playSound:@"boo-01.wav" looping:NO];
     }
@@ -322,6 +322,7 @@
     if (_monumentos == nil || [_monumentos count] == 0) {
         [self GameOverAlert];
         [self initJuego];
+        
     }
 
 }
