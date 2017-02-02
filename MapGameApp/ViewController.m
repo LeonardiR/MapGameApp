@@ -12,10 +12,13 @@
 @end
 
 @implementation ViewController
-
+{
+    MKPolyline *geodesicPolyline;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+   
     
   _mapaMonumento = [[MKMapView alloc] initWithFrame:self.mapMonuView.bounds];
   _mapaMundo = [[MKMapView alloc] initWithFrame:self.MapMunView.bounds];
@@ -37,9 +40,15 @@
     [_mapaMundo setScrollEnabled:YES];
     [_mapaMundo setRotateEnabled:YES];
     
-    [self initJuego];
+    _okBtn.enabled = NO;
+    
     [self.mapMonuView addSubview:_mapaMonumento];
     [self.MapMunView addSubview:_mapaMundo];
+    self.mapaMundo.delegate=self;
+    self.mapaMonumento.delegate=self;
+    
+    [self initJuego];
+    
     
 }
 
@@ -55,6 +64,8 @@
     [self initMonumentos];
     [self selectRandomMonumento];
     [self mostrarMonumento];
+    _swipeleft=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeleft:)];
+    _swipeleft.direction=UISwipeGestureRecognizerDirectionLeft;
     _lpgr = [[UILongPressGestureRecognizer alloc]
              initWithTarget:self action:@selector(handleLongPress:)];
     _lpgr.minimumPressDuration = 2.0;
@@ -64,15 +75,32 @@
 }
 
 - (void) mostrarMonumento {
-    MKMapCamera* currentCameraMonu  = _mapaMonumento.camera;
-    MKMapCamera* currentCameraMun  = _mapaMundo.camera;
+    _MonuCoords = CLLocationCoordinate2DMake(_Monumento.lat, _Monumento.lng);
+    CLLocationCoordinate2D MunCoords = CLLocationCoordinate2DMake(39.09596294, -18.10546875);
+    float eyeAltitude = 100.0f;
+    float eyeAltitude2 = 1.0f;
+    _currentCameraMonu = [MKMapCamera
+                           cameraLookingAtCenterCoordinate:(CLLocationCoordinate2D)_MonuCoords
+                           fromEyeCoordinate:(CLLocationCoordinate2D)_MonuCoords
+                           eyeAltitude:(CLLocationDistance)eyeAltitude];
     
-    [currentCameraMonu setCenterCoordinate:CLLocationCoordinate2DMake(_Monumento.lat,_Monumento.lng)];
-    [currentCameraMonu setPitch:_Monumento.pitch];
-    [currentCameraMonu setAltitude:200.0f];
-    [currentCameraMonu setHeading:_Monumento.heading];
-    [_mapaMonumento setCamera:currentCameraMonu animated:NO];
-    [_mapaMundo setCamera:currentCameraMun animated:NO];
+    _currentCameraMun = [MKMapCamera
+                          cameraLookingAtCenterCoordinate:(CLLocationCoordinate2D)MunCoords
+                          fromEyeCoordinate:(CLLocationCoordinate2D)MunCoords
+                          eyeAltitude:(CLLocationDistance)eyeAltitude2];
+    
+    _currentCameraMonu  = _mapaMonumento.camera;
+    _currentCameraMun  = _mapaMundo.camera;
+    
+    [_currentCameraMonu setAltitude:eyeAltitude];
+    [_currentCameraMonu setCenterCoordinate:CLLocationCoordinate2DMake(_Monumento.lat,_Monumento.lng)];
+    [_currentCameraMonu setPitch:_Monumento.pitch];
+    [_currentCameraMonu setHeading:_Monumento.heading];
+    
+    
+    
+    [_mapaMonumento setCamera:_currentCameraMonu animated:NO];
+    [_mapaMundo setCamera:_currentCameraMun animated:NO];
     
 }
 
@@ -257,22 +285,48 @@
     [self playSound];
     [self dibujarLinea];
     [self.mapaMundo removeGestureRecognizer:_lpgr];
+    _okBtn.enabled= NO;
+        [self.view addGestureRecognizer:_swipeleft];
+
 }
 
+-(void) GameOverAlert{
+    
+    
+    actionSheet = [UIAlertController alertControllerWithTitle:@"FIN DEL JUEGO" message:@"Presione OK" preferredStyle:UIAlertControllerStyleActionSheet];
+    actionSheet.popoverPresentationController.sourceView = self.generalView;
+    actionSheet.popoverPresentationController.sourceRect = self.generalView.bounds;
 
-- (IBAction)nextBtn:(UIButton *)sender {
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        
+        [self dismissViewControllerAnimated:YES completion:^{}];
+    }]];
+    
+
+    [self presentViewController:actionSheet animated:YES completion:nil];
+    
+    
+}
+
+-(void)swipeleft:(UISwipeGestureRecognizer*)gestureRecognizer
+{
+    _monumentolbl.text = [NSString stringWithFormat: @"Situa el monumento en el mapa"];
+    [_mapaMundo removeAnnotations:_mapaMundo.annotations];
+    [_mapaMundo removeOverlay:geodesicPolyline];
+    _okBtn.enabled= NO;
+    [self.view removeGestureRecognizer:_swipeleft];
     [self selectRandomMonumento];
     [self mostrarMonumento];
     [self.mapaMundo addGestureRecognizer:_lpgr];
-    _monumentolbl.text = [NSString stringWithFormat: @"Situa el monumento en el mapa"];
-    [_mapaMundo removeAnnotations:_mapaMundo.annotations];
-    
     
     if (_monumentos == nil || [_monumentos count] == 0) {
+        [self GameOverAlert];
         [self initJuego];
     }
-    
+
 }
+
+
 
 - (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer
 {
@@ -293,6 +347,7 @@
     _KilometersInt = (int) kilometers;
     _KilometersIntTotal+=_KilometersInt;
     [self.mapaMundo removeGestureRecognizer:_lpgr];
+    _okBtn.enabled = YES;
     
 }
 
@@ -303,8 +358,8 @@
                                            initWithOverlay:overlay];
     UIColor *lineColor = [UIColor redColor];
     
-    if([overlay isKindOfClass:[MKGeodesicPolyline class]]) {
-        lineColor = [UIColor blackColor];
+    if([overlay isKindOfClass:[MKPolyline class]]) {
+        lineColor = [UIColor redColor];
     }
     [polylineRender setStrokeColor:lineColor];
     [polylineRender setLineWidth:3.0f];
@@ -321,18 +376,9 @@
     points[0] = _ini.coordinate;
     points[1] = _fin.coordinate;
     
-    MKGeodesicPolyline *overlayPolyline =
-    [MKGeodesicPolyline polylineWithCoordinates:points count:2];
-    
-    MKGeodesicPolyline *geodesicPolyline =
-    [MKGeodesicPolyline polylineWithCoordinates:points count:2];
-    
-    [_mapaMundo addOverlay:overlayPolyline];
+    geodesicPolyline = [MKPolyline polylineWithCoordinates:points count:2];
     [_mapaMundo addOverlay:geodesicPolyline];
-    
         
-    
-
 }
 
 @end
